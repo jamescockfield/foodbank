@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @RequestMapping("/auth")
+    @RequestMapping("/api/auth")
     public String auth() {
         return "auth endpoint";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/api/login")
     public String login() {
         return "this is the login page";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("/api/register")
     public String register() {
         return "this is the register page";
     }
