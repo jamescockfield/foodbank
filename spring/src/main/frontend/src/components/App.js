@@ -20,9 +20,6 @@ function App () {
             <Navbar/>
             <Carousel/>
             <Switch>
-                <Route path="/">
-                   <Home/> 
-                </Route>
                 <Route path="/collect">
                    <Collect/> 
                 </Route>
@@ -34,6 +31,9 @@ function App () {
                 </Route>
                 <Route path="/login">
                    <Login/> 
+                </Route>
+                <Route path="/">
+                   <Home/> 
                 </Route>
             </Switch>
             </Router>

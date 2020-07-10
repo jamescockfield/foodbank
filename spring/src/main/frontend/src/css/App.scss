@@ -7,41 +7,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 #app {
     text-align: center;
     background-color: #282c34;
     min-height: 100vh;
-    font-size: calc(10px + 2vmin);
     color: white;
     padding: 10px;
 }
 
-#logoIcon {
-    width: 65px;
-    height: 65px;
-    border-radius: 65px;
-    padding: 10px;
-    background-color: white;
-    color: #282c34;
-    * {
-        display: inline-block;
-        margin: 0 0 0 -5px;
-        font-style: italic;
-    }
+.large-text {
+    font-size: calc(10px + 2vmin);
 }
 
+.medium-text {
+    font-size: calc(10px + 1.5vmin);
+}
 
 #navbar {
     display: grid;
-    grid-template-columns: min-content min-content auto min-content;
+    grid-template-columns: min-content auto min-content;
     align-items: center;
     padding: 10px 10px 20px 10px;
     text-align: left;
+    font-size: calc(10px + 2vmin);
     * {
         text-align: center;
         display: inline;
@@ -51,9 +39,66 @@ code {
         color: white;
         margin: 0 10px;
     }
-     a:hover {
-         text-decoration-line: underline;
-     }
+    > div a:hover {
+        text-decoration-line: underline;
+    }
+}
+
+.padding-large {
+    padding: 100px;
+}
+
+.padding-medium {
+    padding: 30px;
+}
+
+form {
+    width: fit-content;
+    margin: auto;
+
+    * {
+        display: block;
+        margin: 5px 0;
+    }
+}
+#contact-form {
+    input, textarea {
+        width: 400px;
+    }
+    textarea {
+        height: 200px;
+    }
+}
+
+#logo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    div:first-child {
+        box-sizing: content-box;
+        width: 65px;
+        height: 65px;
+        border-radius: 65px;
+        padding: 5px;
+        background-color: white;
+        color: #282c34;
+
+        * {
+            display: inline-block;
+            margin: -5px 0 0 -5px;
+            font-style: italic;
+        }
+    
+        #logoIconHelper {
+            position: absolute;
+            margin: -30px 0 0 -28px;
+        }
+    }
+
+    div:nth-child(2) h1 {
+        margin: 0 20px;
+    }
 }
 
 #banner img {
@@ -64,10 +109,26 @@ code {
     width: 100%;
 }
 
-#logoText {
-    margin: 0 20px;
-}
+#body {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
 
-.App-link {
-    color: #61dafb;
+    > div {
+        padding: 10px 30px;
+
+        > p {
+            text-align: left;
+        }
+    }
+
+    > div > p:first-child {
+        font-size: calc(10px + 1.5vmin);
+        text-align: center;
+        padding: 20px;
+    }
+
+    img {
+        width: 100%;
+    }
 }

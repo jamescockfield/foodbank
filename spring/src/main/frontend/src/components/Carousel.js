@@ -12,16 +12,16 @@ class Carousel extends Component {
       <div id="banner">
         <Slider { ...settings }>
           <div>
-            <img src="http://localhost:8080/img/banner-1.jpg"/>
+            <img alt='' src="http://localhost:8080/img/banner-1.jpg"/>
           </div>
           <div>
-            <img src="http://localhost:8080/img/banner-2.jpg"/>
+            <img alt='' src="http://localhost:8080/img/banner-2.jpg"/>
           </div>
           <div>
-            <img src="http://localhost:8080/img/banner-3.jpg"/>
+            <img alt='' src="http://localhost:8080/img/banner-3.jpg"/>
           </div>
           <div>
-            <img src="http://localhost:8080/img/banner-4.jpg"/>
+            <img alt='' src="http://localhost:8080/img/banner-4.jpg"/>
           </div>
         </Slider>
       </div>
