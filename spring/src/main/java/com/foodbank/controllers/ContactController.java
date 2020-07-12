@@ -6,29 +6,29 @@ import org.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthController {
+public class ContactController {
 
-    @RequestMapping("/api/auth")
-    public String auth() {
-
-        return "auth endpoint";
+    @GetMapping("/api/contact")
+    public String getContact() {
+        return "this is the contact page";
     }
-
-    @PostMapping("/api/login")
-    public ResponseEntity<HttpStatus> login(@RequestBody String requestString) {
-
+    
+    @PostMapping("/api/contact")
+    public ResponseEntity<HttpStatus> postContact(@RequestBody String requestString) {
+        
         String email;
+        JSONObject request;
 
         try {
-
-            JSONObject request = new JSONObject(requestString);
+            request = new JSONObject(requestString);
             email = request.getString("email");
+
         } catch (Exception e) {
 
             System.out.println(e.getMessage());
@@ -39,16 +39,11 @@ public class AuthController {
 
         if (validator.isValid(email)) {
 
+            System.out.println("Received contact form submission: " + request.toString());
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
         } else {
 
-            return new ResponseEntity<HttpStatus>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
-    }
-
-    @RequestMapping("/api/register")
-    public String register() {
-
-        return "this is the register page";
     }
 }

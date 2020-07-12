@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/App.scss';
 import Map from './Map.js';
+import ContactForm from './ContactForm.js';
 
 var Contact = () => (
     <div id="body">
@@ -17,12 +18,7 @@ var Contact = () => (
             <Map/>
         </div>
         <div>
-            <form id="contact-form">
-                <input placeholder="Name"/>
-                <input placeholder="Email"/>
-                <textarea placeholder="Message"/>
-                <button>Submit</button>
-            </form>
+            <ContactForm/>
         </div>
     </div>
 );
