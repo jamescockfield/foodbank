@@ -15,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     private UserType userType;
 
@@ -34,6 +34,6 @@ public class User {
 
     public String hashPassword(String password) {
 
-        return "";
+        return password;
     }
 }
