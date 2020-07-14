@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/App.scss';
-import helpSubmitForm from '../helpers/FormHelper.js';
+import 'css/App.scss';
+import helpSubmitForm from 'helpers/FormHelper.js';
 
 class Login extends React.Component {
 

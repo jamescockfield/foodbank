@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/App.scss';
+import 'css/App.scss';
 
 var Map = () => (
     <div id="map">

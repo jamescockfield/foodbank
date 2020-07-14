@@ -16,7 +16,6 @@
 
 	<properties>
 		<java.version>14</java.version>
-        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -49,10 +48,17 @@
         </dependency>
 
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180130</version>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>  
+            <version>1.0</version>
         </dependency>
+
+        <dependency>
+    		<groupId>org.projectlombok</groupId>
+    		<artifactId>lombok</artifactId>
+    		<version>1.18.12</version>
+    		<scope>provided</scope>
+    	</dependency>
 	</dependencies>
 
     <dependencyManagement>
@@ -60,7 +66,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>Hoxton.SR6</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

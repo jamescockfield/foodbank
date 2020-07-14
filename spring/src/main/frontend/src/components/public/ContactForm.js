@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/App.scss';
-import helpSubmitForm from '../helpers/FormHelper.js';
+import 'css/App.scss';
+import helpSubmitForm from 'helpers/FormHelper.js';
 
 const INITIAL_STATE = {
     name: '',

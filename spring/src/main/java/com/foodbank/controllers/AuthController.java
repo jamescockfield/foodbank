@@ -1,8 +1,6 @@
 package com.foodbank.controllers;
 
-import org.apache.commons.validator.routines.EmailValidator;
-
-import org.json.JSONObject;
+import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.foodbank.data.User;
+import com.foodbank.data.UserType;
+import com.foodbank.utils.RequestValidator;
+
 @RestController
 public class AuthController {
+
+    private RequestValidator validator;
 
     @RequestMapping("/api/auth")
     public String auth() {
@@ -21,34 +25,36 @@ public class AuthController {
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<HttpStatus> login(@RequestBody String requestString) {
+    public ResponseEntity<HttpStatus> login(@RequestBody HashMap<String, String> request) {
 
-        String email;
+        if (
+            RequestValidator.validateEmail(request.get("email")) &&
+            RequestValidator.validatePassword(request.get("password"))
+        ) {
 
-        try {
+            return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        } else {
 
-            JSONObject request = new JSONObject(requestString);
-            email = request.getString("email");
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
-            return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+    }
 
-        EmailValidator validator = EmailValidator.getInstance();
+    @RequestMapping("/api/register")
+    public ResponseEntity<HttpStatus> register(@RequestBody HashMap<String, String> request) {
 
-        if (validator.isValid(email)) {
+        String email = request.get("email");
+        String password = request.get("password");
 
+        if (
+            RequestValidator.validateEmail(email) &&
+            RequestValidator.validatePassword(password)
+        ) {
+
+            User user = new User(UserType.VOLUNTEER, email, password);
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
         } else {
 
             return new ResponseEntity<HttpStatus>(HttpStatus.UNAUTHORIZED);
         }
-    }
-
-    @RequestMapping("/api/register")
-    public String register() {
-
-        return "this is the register page";
     }
 }

@@ -1,8 +1,15 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
+!**/src/main/java/**
+!**/src/main/frontend/**
 !**/src/test/**
+application.properties
+
+### frontend ###
+node_modules
+package-lock.json
+**/static/src.js
 
 ### STS ###
 .apt_generated

@@ -1,7 +1,7 @@
 import React from 'react';
-import '../css/App.scss';
-import Map from './Map.js';
-import ContactForm from './ContactForm.js';
+import 'css/App.scss';
+import Map from 'components/public/Map.js';
+import ContactForm from 'components/public/ContactForm.js';
 
 var Contact = () => (
     <div id="body">

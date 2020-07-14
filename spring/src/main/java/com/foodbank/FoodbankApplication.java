@@ -10,5 +10,4 @@ public class FoodbankApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FoodbankApplication.class, args);
 	}
-
 }

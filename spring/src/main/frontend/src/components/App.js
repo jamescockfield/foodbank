@@ -4,14 +4,15 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import '../css/App.scss';
-import Navbar from './Navbar.js';
-import Carousel from './Carousel.js';
-import Home from './Home.js';
-import Collect from './Collect.js';
-import Donate from './Donate.js';
-import Contact from './Contact.js';
-import Login from './Login.js';
+import 'css/App.scss';
+import Navbar from 'components/public/Navbar.js';
+import Register from 'components/Register.js';
+import Carousel from 'components/public/Carousel.js';
+import Home from 'components/public/Home.js';
+import Collect from 'components/public/Collect.js';
+import Donate from 'components/public/Donate.js';
+import Contact from 'components/public/Contact.js';
+import Login from 'components/public/Login.js';
 
 function App () {
     return (
@@ -20,6 +21,9 @@ function App () {
             <Navbar/>
             <Carousel/>
             <Switch>
+                <Route path="/register">
+                   <Register/> 
+                </Route>
                 <Route path="/collect">
                    <Collect/> 
                 </Route>
