@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.foodbank.data.User;
 import com.foodbank.data.UserType;
 import com.foodbank.data.repository.UserRepository;
+import com.foodbank.data.repository.UserTypeRepository;
 import com.foodbank.utils.RequestValidator;
 
 @RestController
 public class AuthController {
 
-    @Autowired
-    private UserRepository repository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private UserTypeRepository userTypeRepository;
 
     @RequestMapping("/api/auth")
     public String auth() {
@@ -56,8 +55,9 @@ public class AuthController {
             RequestValidator.validatePassword(password)
         ) {
 
-            User user = new User(UserType.VOLUNTEER, email, password);
-            repository.save(user);
+            UserType userType = userTypeRepository.findByName(UserType.VOLUNTEER);
+            User user = new User(userType, email, password);
+            userRepository.save(user);
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
         } else {
 
