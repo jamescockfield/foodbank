@@ -49,13 +49,14 @@ public class AuthController {
 
         String email = request.get("email");
         String password = request.get("password");
+        String userTypeString = request.get("userType");
 
         if (
             RequestValidator.validateEmail(email) &&
             RequestValidator.validatePassword(password)
         ) {
 
-            UserType userType = userTypeRepository.findByName(UserType.VOLUNTEER);
+            UserType userType = userTypeRepository.findByName(userTypeString);
             User user = new User(userType, email, password);
             userRepository.save(user);
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);

@@ -2,6 +2,10 @@ package com.foodbank.utils;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.foodbank.data.repository.UserTypeRepository;
+
 public class RequestValidator {
 
     public static boolean validateEmail(String email) {
