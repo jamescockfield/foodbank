@@ -24,8 +24,8 @@ class Register extends React.Component {
                     <input placeholder="Password" type="password" ref={ node => this.password = node } />
                     <input placeholder="Repeat Password" type="password" ref={ node => this.repeatPassword = node } />
                     <select ref={ node => this.userType = node }>
-                        <option value="volunteer">Volunteer</option>
-                        <option value="manager">Manager</option>
+                        <option value="Volunteer">Volunteer</option>
+                        <option value="Manager">Manager</option>
                     </select>
                     <input type="submit" value="Submit"/>
                 </form>

@@ -5,18 +5,19 @@ import {
   Route,
 } from "react-router-dom";
 import 'css/App.scss';
-import Navbar from 'components/public/Navbar.js';
-import Register from 'components/Register.js';
-import Carousel from 'components/public/Carousel.js';
-import Home from 'components/public/Home.js';
-import Collect from 'components/public/Collect.js';
-import Donate from 'components/public/Donate.js';
-import Contact from 'components/public/Contact.js';
-import Login from 'components/public/Login.js';
+import Register from 'components/Register';
+import Navbar from 'components/public/Navbar';
+import Carousel from 'components/public/Carousel';
+import Home from 'components/public/Home';
+import Collect from 'components/public/Collect';
+import Donate from 'components/public/Donate';
+import Volunteer from 'components/public/Volunteer';
+import Contact from 'components/public/Contact';
+import Login from 'components/public/Login';
 
 function App () {
     return (
-        <div id="app">
+        <div id="app" className="bp3-dark">
             <Router>
             <Navbar/>
             <Carousel/>
@@ -29,6 +30,9 @@ function App () {
                 </Route>
                 <Route path="/donate">
                    <Donate/> 
+                </Route>
+                <Route path="/volunteer">
+                    <Volunteer/>
                 </Route>
                 <Route path="/contact">
                    <Contact/> 

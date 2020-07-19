@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,16 @@ public class AuthController {
     @Autowired private UserRepository userRepository;
     @Autowired private UserTypeRepository userTypeRepository;
 
-    @RequestMapping("/api/auth")
-    public String auth() {
+    @GetMapping("/api/auth")
+    public ResponseEntity<HttpStatus> authenticate() {
 
-        return "auth endpoint";
+        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @GetMapping("/api/logout")
+    public ResponseEntity<HttpStatus> logout() {
+
+        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @PostMapping("/api/login")
@@ -44,7 +51,7 @@ public class AuthController {
         }
     }
 
-    @RequestMapping("/api/register")
+    @PostMapping("/api/register")
     public ResponseEntity<HttpStatus> register(@RequestBody HashMap<String, String> request) {
 
         String email = request.get("email");

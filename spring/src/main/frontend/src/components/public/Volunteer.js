@@ -1,13 +1,12 @@
 import React from 'react';
-import 'css/App.scss';
 
-var Donate = () => (
+var Volunteer = () => (
     <div className="vertical-split">
         <div>
-            <img alt="" src="http://localhost:8080/img/image-6.jpg"/>
+            <img alt="" src="http://localhost:8080/img/image-10.jpg"/>
         </div>
         <div>
-            <p className="medium-text">This is the donations page</p>
+            <p className="medium-text">This is the volunteering page</p>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare et ligula at lobortis. Integer tristique nunc quam, id dictum neque suscipit a. Vestibulum mattis imperdiet arcu, non tempor ligula eleifend et. Ut et arcu id augue iaculis dapibus vel sed ligula. Nullam varius odio non aliquam consequat. Curabitur egestas id sem et auctor. Nam vehicula ultrices elit, non commodo libero imperdiet a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quam nibh, pulvinar ac neque at, malesuada blandit massa. Phasellus vel massa quis ante hendrerit condimentum quis pulvinar est. Sed eleifend libero et eros congue, quis dapibus mauris maximus. Nunc auctor sodales libero, at vehicula neque convallis sagittis.
                 Nunc diam nulla, condimentum et laoreet viverra, hendrerit eu nisl. Vestibulum bibendum consequat sapien, vitae rhoncus nisl porta sed. Vivamus vel dui eget nibh consequat consequat. Sed convallis ante tellus, eu euismod sapien suscipit in. Mauris vel congue augue, quis ullamcorper libero. Vestibulum vitae orci ex. Suspendisse faucibus eleifend facilisis. Ut ante erat, accumsan vitae sollicitudin id, congue et ante. Ut ornare maximus mi, malesuada elementum elit posuere ut. Quisque euismod mauris vel euismod scelerisque. Vivamus porttitor hendrerit augue, et fermentum sapien maximus sit amet. In hac habitasse platea dictumst. Vivamus tristique est a quam cursus, lobortis volutpat lorem auctor. Nullam vitae libero felis. Aliquam erat volutpat. In id felis condimentum, luctus lectus vel, finibus felis.
@@ -21,4 +20,4 @@ var Donate = () => (
     </div>
 );
 
-export default Donate;
+export default Volunteer;
