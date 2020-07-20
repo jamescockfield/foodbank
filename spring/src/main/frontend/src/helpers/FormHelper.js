@@ -3,37 +3,43 @@ import { validate } from 'email-validator';
 
 const TOASTER = Toaster.create();
 
-function helpSubmitForm(path, body, successMessage, successCallback) {
+async function getCsrf() {
 
+    let response = await fetch('/api/csrf');
+    let json = await response.json();
+    return json.token;
+}
+
+async function helpSubmitForm(path, body, successMessage, successCallback) {
+
+    console.log("todo: implement frontend validation");
     console.log(validate(body.email));
-        
-    fetch(path, {
+
+    let response = await fetch(path, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': await getCsrf()
         },
         body: JSON.stringify(body)
-    })
-        .then(res => res)
-        .then(res => {
-            
-            if (res.status === 200) {
+    });
     
-                TOASTER.show({
-                    message: successMessage,
-                    intent: Intent.SUCCESS
-                });
-
-                successCallback && successCallback();
-
-            } else if (res.status >= 400) {
+    if (response.status === 200) {
     
-                TOASTER.show({
-                    message: res.statusText,
-                    intent: Intent.DANGER
-                });
-            }
+        TOASTER.show({
+            message: successMessage,
+            intent: Intent.SUCCESS
         });
+
+        successCallback && successCallback();
+
+    } else if (response.status >= 400) {
+    
+        TOASTER.show({
+            message: response.statusText,
+            intent: Intent.DANGER
+        });
+    }
 }
 
 export default helpSubmitForm;

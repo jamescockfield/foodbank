@@ -30,8 +30,11 @@ class ContactForm extends React.Component {
         delete payload.submitDisabled;
 
         helpSubmitForm('/api/contact', payload, 'Message sent', () => {
+
             this.setState({ ...INITIAL_STATE, submitDisabled: true });
+
             setTimeout(() => {
+
                 this.setState({ submitDisabled: false });
             }, 2000);
         });

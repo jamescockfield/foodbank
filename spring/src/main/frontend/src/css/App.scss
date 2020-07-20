@@ -124,6 +124,11 @@ form {
     }
 }
 
+#map {
+    display: grid;
+    justify-items: center;
+}
+
 #banner img {
     object-fit: cover;
     object-position: 0 65%;

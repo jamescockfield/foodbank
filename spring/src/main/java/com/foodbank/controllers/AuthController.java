@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.security.web.csrf.CsrfToken;
 
 import com.foodbank.data.User;
 import com.foodbank.data.UserType;
@@ -24,15 +27,17 @@ public class AuthController {
     @Autowired private UserRepository userRepository;
     @Autowired private UserTypeRepository userTypeRepository;
 
-    @GetMapping("/api/auth")
-    public ResponseEntity<HttpStatus> authenticate() {
+    @GetMapping("/api/csrf")
+    public CsrfToken csrf(CsrfToken token) {
 
-        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
+        return token;
     }
 
     @GetMapping("/api/logout")
     public ResponseEntity<HttpStatus> logout() {
 
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Set-Cookie", "fb=");
         return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
     }
 
