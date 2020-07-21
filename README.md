@@ -13,6 +13,7 @@ Installation
 The project should run fine using maven. However, the project uses an SQL database so you will need to set a user up who can access this.
 ```sql
 CREATE USER 'foodbank'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON foodbank.* TO 'foodbank'@'localhost';
 ```
 These are the default credentials, but you can customise them in `application.properties` if necessary.
 
