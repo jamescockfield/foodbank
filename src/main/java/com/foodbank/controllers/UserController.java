@@ -2,8 +2,6 @@ package com.foodbank.controllers;
 
 import java.util.HashMap;
 
-import com.foodbank.data.User;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,12 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
-
-    @GetMapping("/api/user")
-    public User getUser(User user) {
-
-        return user;
-    }
 
     @GetMapping("/api/users")
     public ResponseEntity<HttpStatus> getUsers() {
