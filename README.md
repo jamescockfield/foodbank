@@ -17,14 +17,12 @@ GRANT ALL PRIVILEGES ON foodbank.* TO 'foodbank'@'localhost';
 ```
 These are the default credentials, but you can customise them in `application.properties` if necessary.
 
-The project will create the foodbank database automatically, but it needs to be run for the first time with the `--seed` command line argument, or whenever you want to seed the database.
+The project will create the foodbank database automatically, but for the first run and whenever seeding is needed, you will need to pass the command line arg to enable seeding.
 
 From the root directory:
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments=--seed=true
+mvn spring-boot:run -Dspring-boot.run.arguments=--spring.datasource.initialization-mode=always
 ```
-
-When seeding with a preexisting database you will need to manually drop the database before running the above command.
 
 Functionality
 -------------
