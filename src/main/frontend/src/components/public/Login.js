@@ -2,29 +2,11 @@ import React from 'react';
 import 'css/App.scss';
 import helpSubmitForm from 'helpers/FormHelper.js';
 
-async function getCsrf() {
-
-    let response = await fetch('/api/csrf');
-    let json = await response.json();
-    return json.token;
-}
-
 class Login extends React.Component {
 
     handleSubmit(e) {
 
         e.preventDefault();
-
-        // getCsrf().then(token => {
-//
-            // fetch('/api/login', {
-                // method: 'POST',
-                // headers: {
-                    // 'X-CSRF-TOKEN': token
-                // },
-                // body: new URLSearchParams('username=' + this.email.value + '&password=' + this.password.value),
-            // });
-        // });
 
         helpSubmitForm('/api/login', {
             username: this.email.value,

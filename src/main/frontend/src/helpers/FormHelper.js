@@ -1,5 +1,4 @@
 import { Toaster, Intent } from '@blueprintjs/core';
-import { validate } from 'email-validator';
 
 const TOASTER = Toaster.create();
 
@@ -11,9 +10,6 @@ async function getCsrf() {
 }
 
 async function helpSubmitForm(path, body, successMessage, successCallback) {
-
-    console.log("todo: implement frontend validation");
-    console.log(validate(body.email));
 
     let response = await fetch(path, {
         method: 'POST',

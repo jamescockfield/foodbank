@@ -37,21 +37,6 @@ public class AuthController {
         return token;
     }
 
-    // @PostMapping("/api/login")
-    // public ResponseEntity<HttpStatus> login(@RequestBody HashMap<String, String> request) {
-//
-        // if (
-            // RequestValidator.validateEmail(request.get("email")) &&
-            // RequestValidator.validatePassword(request.get("password"))
-        // ) {
-//
-            // return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-        // } else {
-//
-            // return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
-        // }
-    // }
-
     @PostMapping("/api/register")
     public ResponseEntity<HttpStatus> register(@RequestBody HashMap<String, String> request) {
 

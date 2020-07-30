@@ -59,9 +59,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JsonUsernamePasswordAuthenticationFilter jsonAuthenticationFilter() throws Exception {
 
         JsonUsernamePasswordAuthenticationFilter filter = new JsonUsernamePasswordAuthenticationFilter();
-        filter.setAuthenticationSuccessHandler(new JsonAuthenticationSuccessHandler());
         filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
+        filter.setFilterProcessesUrl("/api/login");
         return filter;
     }
 
