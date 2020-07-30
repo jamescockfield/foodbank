@@ -1,77 +1,91 @@
-// package com.foodbank.controllers;
+package com.foodbank.controllers;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import org.springframework.security.web.csrf.CsrfToken;
+
+import com.foodbank.utils.RequestValidator;
+
+@RestController
+public class AuthController {
+
+    @Autowired JdbcUserDetailsManager userDetailsManager;
+    @Autowired BCryptPasswordEncoder enc;
+
+    @GetMapping("/api/csrf")
+    public CsrfToken csrf(CsrfToken token) {
+
+        return token;
+    }
+
+    // @PostMapping("/api/login")
+    // public ResponseEntity<HttpStatus> login(@RequestBody HashMap<String, String> request) {
 //
-// import java.util.HashMap;
+        // if (
+            // RequestValidator.validateEmail(request.get("email")) &&
+            // RequestValidator.validatePassword(request.get("password"))
+        // ) {
 //
-// import org.springframework.beans.factory.annotation.Autowired;
+            // return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        // } else {
 //
-// import org.springframework.http.HttpHeaders;
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
-//
-// import org.springframework.security.web.csrf.CsrfToken;
-//
-// import com.foodbank.data.User;
-// import com.foodbank.data.UserType;
-// import com.foodbank.data.repository.UserRepository;
-// import com.foodbank.data.repository.UserTypeRepository;
-// import com.foodbank.utils.RequestValidator;
-//
-// @RestController
-// public class AuthController {
-//
-//     @Autowired private UserRepository userRepository;
-//     @Autowired private UserTypeRepository userTypeRepository;
-//
-//     @GetMapping("/api/csrf")
-//     public CsrfToken csrf(CsrfToken token) {
-//
-//         return token;
-//     }
-//
-//     @GetMapping("/api/logout")
-//     public ResponseEntity<HttpStatus> logout() {
-//
-//         HttpHeaders responseHeaders = new HttpHeaders();
-//         responseHeaders.set("Set-Cookie", "fb=");
-//         return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
-//     }
-//
-//     @PostMapping("/api/login")
-//     public ResponseEntity<HttpStatus> login(@RequestBody HashMap<String, String> request) {
-//
-//         if (
-//             RequestValidator.validateEmail(request.get("email")) &&
-//             RequestValidator.validatePassword(request.get("password"))
-//         ) {
-//
-//             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-//         } else {
-//
-//             return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
-//         }
-//     }
-//
-//     @PostMapping("/api/register")
-//     public ResponseEntity<HttpStatus> register(@RequestBody HashMap<String, String> request) {
-//
-//         String email = request.get("email");
-//         String password = request.get("password");
-//         String userTypeString = request.get("userType");
-//
-//         if (
-//             RequestValidator.validateEmail(email) &&
-//             RequestValidator.validatePassword(password)
-//         ) {
-//
-//             return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
-//         } else {
-//
-//             return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
-//         }
-//     }
-// }
+            // return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
+        // }
+    // }
+
+    @PostMapping("/api/register")
+    public ResponseEntity<HttpStatus> register(@RequestBody HashMap<String, String> request) {
+
+        String email = request.get("email");
+        String password = request.get("password");
+        String role = request.get("role") == "Manager" ? "ROLE_ADMIN" : "ROLE_USER";
+
+        if (
+            RequestValidator.validateEmail(email) &&
+            RequestValidator.validatePassword(password)
+        ) {
+
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority(role));
+
+            UserDetails user = new User(email, enc.encode(password), authorities);
+            userDetailsManager.createUser(user);
+
+            try {
+                // Could run some more logic here to test if the created user is valid
+                if (userDetailsManager.loadUserByUsername(user.getUsername()).isEnabled()) {
+
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                } else {
+
+                    return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            } catch (UsernameNotFoundException exception) {
+
+                return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+
+            return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+}

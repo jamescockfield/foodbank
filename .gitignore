@@ -1,9 +1,10 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/java/**
-!**/src/main/frontend/**
-!**/src/test/**
+!src/main/java/**
+!src/main/frontend/**
+!src/test/**
+*.log
 
 ### frontend ###
 node_modules
