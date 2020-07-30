@@ -20,8 +20,15 @@ import org.springframework.security.core.Authentication;
 
 import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    public JsonUsernamePasswordAuthenticationFilter() {
+
+        super();
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationServiceException {

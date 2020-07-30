@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.foodbank.security.JsonAuthenticationSuccessHandler;
 import com.foodbank.security.JsonUsernamePasswordAuthenticationFilter;
@@ -57,10 +58,11 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private JsonUsernamePasswordAuthenticationFilter jsonAuthenticationFilter() throws Exception {
 
-        JsonUsernamePasswordAuthenticationFilter authenticationFilter = new JsonUsernamePasswordAuthenticationFilter();
-        authenticationFilter.setAuthenticationSuccessHandler(new JsonAuthenticationSuccessHandler());
-        authenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        return authenticationFilter;
+        JsonUsernamePasswordAuthenticationFilter filter = new JsonUsernamePasswordAuthenticationFilter();
+        filter.setAuthenticationSuccessHandler(new JsonAuthenticationSuccessHandler());
+        filter.setAuthenticationManager(authenticationManagerBean());
+        filter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
+        return filter;
     }
 
     @Override
@@ -72,9 +74,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated().and()
             .addFilterBefore(jsonAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
             .formLogin()
-                .loginPage("/api/login")
-                .defaultSuccessUrl("/?success")
-                // .loginProcessingUrl("/api/login")
+                .loginPage("/login")
+                .loginProcessingUrl("/api/login")
                 .permitAll();
     }
 
