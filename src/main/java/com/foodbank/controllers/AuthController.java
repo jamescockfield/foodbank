@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,6 +37,14 @@ public class AuthController {
     public CsrfToken csrf(CsrfToken token) {
 
         return token;
+    }
+
+    @GetMapping("/api/auth")
+    public String auth() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String authority = auth.getAuthorities().iterator().next().getAuthority();
+        return authority;
     }
 
     @PostMapping("/api/register")

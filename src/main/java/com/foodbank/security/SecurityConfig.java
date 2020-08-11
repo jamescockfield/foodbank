@@ -17,9 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.foodbank.security.JsonAuthenticationSuccessHandler;
 import com.foodbank.security.JsonUsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -69,13 +67,17 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .authorizeRequests()
-            .antMatchers("/api/contact", "/api/register", "/api/csrf").permitAll()
+            .antMatchers("/api/contact", "/api/register", "/api/csrf", "/api/auth").permitAll()
             .anyRequest().authenticated().and()
             .addFilterBefore(jsonAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
             .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/api/login")
-                .permitAll();
+                .successForwardUrl("/")
+                .permitAll().and()
+            .logout()
+                .logoutUrl("/api/logout")
+                .logoutSuccessUrl("/");
     }
 
 }

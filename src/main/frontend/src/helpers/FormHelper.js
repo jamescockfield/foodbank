@@ -20,9 +20,9 @@ async function helpSubmitForm(path, body, successMessage, successCallback) {
         body: JSON.stringify(body)
     });
     
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 302) {
     
-        TOASTER.show({
+        successMessage && TOASTER.show({
             message: successMessage,
             intent: Intent.SUCCESS
         });
@@ -35,6 +35,11 @@ async function helpSubmitForm(path, body, successMessage, successCallback) {
             message: response.statusText,
             intent: Intent.DANGER
         });
+    }
+
+    if (response.redirected) {
+    
+        window.location = response.url;
     }
 }
 
