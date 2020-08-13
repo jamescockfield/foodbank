@@ -27,7 +27,7 @@ async function helpSubmitForm(path, body, successMessage, successCallback) {
             intent: Intent.SUCCESS
         });
 
-        successCallback && successCallback();
+        successCallback && successCallback(response);
 
     } else if (response.status >= 400) {
     
