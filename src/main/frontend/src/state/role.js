@@ -22,9 +22,23 @@ export const roleReducer = (state = Role.ANONYMOUS, action) =>  {
     }
 }
 
+const UPDATING = 'UPDATING';
+export const setUpdating = updating => ({
+    type: UPDATING,
+    updating
+});
+
+export const updatingReducer = (state = false, action) => 
+    action.type === UPDATING ? action.updating : state;
+
 export const getRole = store => {
+
+    store.dispatch(setUpdating(true));
 
     fetch('/api/auth')
         .then(res => res.text())
-        .then(res => store.dispatch(updateRole(res)));
+        .then(res => {
+            store.dispatch(updateRole(res));
+            store.dispatch(setUpdating(false));
+        });
 }

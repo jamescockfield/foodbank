@@ -8,9 +8,9 @@ import 'css/App.scss';
 import Register from 'components/Register';
 import Navbar from 'components/public/Navbar';
 import Carousel from 'components/public/Carousel';
-import PublicRoutes from 'components/public/PublicRoutes';
-import VolunteerRoutes from 'components/volunteer/VolunteerRoutes';
-import ManagerRoutes from 'components/manager/ManagerRoutes';
+import PublicRoutes from 'components/routes/PublicRoutes';
+import VolunteerRoutes from 'components/routes/VolunteerRoutes';
+import ManagerRoutes from 'components/routes/ManagerRoutes';
 
 function App () {
     return (
@@ -19,12 +19,12 @@ function App () {
             <Navbar/>
             <Carousel/>
             <Switch>
-                <VolunteerRoutes/>
-                <ManagerRoutes/>
+                { ManagerRoutes }
+                { VolunteerRoutes }
                 <Route path="/register">
                    <Register/> 
                 </Route>
-                <PublicRoutes/>
+                { PublicRoutes }
             </Switch>
             </Router>
         </div>

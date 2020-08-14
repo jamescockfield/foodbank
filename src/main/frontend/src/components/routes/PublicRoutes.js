@@ -1,5 +1,5 @@
 import { Route } from 'react-router-dom';
-import { routeMapper } from 'components/Routes';
+import { routeMapper } from 'components/routes/Routes';
 import Home from 'components/public/Home';
 import Collect from 'components/public/Collect';
 import Donate from 'components/public/Donate';
