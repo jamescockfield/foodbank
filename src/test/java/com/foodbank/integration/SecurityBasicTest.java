@@ -6,6 +6,7 @@ import java.net.URL;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +21,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest()
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest
 public class SecurityBasicTest {
  
     TestRestTemplate restTemplate;
@@ -31,26 +32,26 @@ public class SecurityBasicTest {
     @BeforeAll
     public void setUp() throws MalformedURLException {
         
-        restTemplate = new TestRestTemplate("user", "password");
-        base = new URL("http://localhost:" + port);
+        restTemplate = new TestRestTemplate("manager", "password");
+        base = new URL("http://localhost:" + port + "/api/auth");
     }
  
     @Test
-    public void whenLoggedUserRequestsHomePage_ThenSuccess() throws IllegalStateException, IOException {
+    public void whenLoggedManager_thenRoleManager() throws IllegalStateException, IOException {
 
         ResponseEntity<String> response = restTemplate.getForEntity(base.toString(), String.class);
  
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.getBody().contains("Baeldung"));
+        assertTrue(response.getBody().contains("ROLE_MANAGER"));
     }
  
     @Test
-    public void whenUserWithWrongCredentials_thenUnauthorizedPage() throws Exception {
+    public void whenUserWithWrongCredentials_thenStillAnonymous() throws Exception {
  
-        restTemplate = new TestRestTemplate("user", "wrongpassword");
+        restTemplate = new TestRestTemplate("manager", "wrongpassword");
         ResponseEntity<String> response = restTemplate.getForEntity(base.toString(), String.class);
  
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        assertTrue(response.getBody().contains("Unauthorized"));
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().contains("ROLE_ANONYMOUS"));
     }
 }
