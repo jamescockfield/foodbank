@@ -7,9 +7,11 @@ import java.net.URL;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import org.springframework.boot.web.server.LocalServerPort;
@@ -17,28 +19,35 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest
-public class SecurityBasicTest {
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class SecurityBasicIT {
  
-    TestRestTemplate restTemplate;
     URL base;
     @LocalServerPort int port;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
  
     @BeforeAll
     public void setUp() throws MalformedURLException {
         
-        restTemplate = new TestRestTemplate("manager", "password");
         base = new URL("http://localhost:" + port + "/api/auth");
     }
  
     @Test
+    public void authShouldReturnAnonymous() throws Exception {
+
+        assertThat(restTemplate.getForObject(base.toString(), String.class)).contains("ROLE_ANONYMOUS");
+    }
+
+    @Test
     public void whenLoggedManager_thenRoleManager() throws IllegalStateException, IOException {
 
+        restTemplate = new TestRestTemplate("manager", "password");
         ResponseEntity<String> response = restTemplate.getForEntity(base.toString(), String.class);
  
         assertEquals(HttpStatus.OK, response.getStatusCode());

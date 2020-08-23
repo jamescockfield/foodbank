@@ -11,7 +11,7 @@ class Register extends React.Component {
         helpSubmitForm('/api/register', {
             email: this.email.value,
             password: this.password.value,
-            userType: this.userType.value
+            role: this.role.value
         }, 'Account created');
     }
 
@@ -23,7 +23,7 @@ class Register extends React.Component {
                     <input placeholder="Email" ref={ node => this.email = node } />
                     <input placeholder="Password" type="password" ref={ node => this.password = node } />
                     <input placeholder="Repeat Password" type="password" ref={ node => this.repeatPassword = node } />
-                    <select ref={ node => this.userType = node }>
+                    <select ref={ node => this.role = node }>
                         <option value="Volunteer">Volunteer</option>
                         <option value="Manager">Manager</option>
                     </select>

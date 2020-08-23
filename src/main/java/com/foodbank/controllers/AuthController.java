@@ -48,39 +48,44 @@ public class AuthController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<HttpStatus> register(@RequestBody HashMap<String, String> request) {
+    public ResponseEntity<String> register(@RequestBody HashMap<String, String> request) {
 
         String email = request.get("email");
         String password = request.get("password");
         String role = request.get("role") == "Manager" ? "ROLE_ADMIN" : "ROLE_USER";
 
-        if (
-            RequestValidator.validateEmail(email) &&
-            RequestValidator.validatePassword(password)
-        ) {
+        if (RequestValidator.validateEmail(email)) {
 
-            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-            authorities.add(new SimpleGrantedAuthority(role));
+            return new ResponseEntity<String>("Invalid email", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
-            UserDetails user = new User(email, enc.encode(password), authorities);
-            userDetailsManager.createUser(user);
+        if (RequestValidator.validatePassword(password)) {
 
-            try {
-                // Could run some more logic here to test if the created user is valid
-                if (userDetailsManager.loadUserByUsername(user.getUsername()).isEnabled()) {
+            return new ResponseEntity<String>("Invalid password", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
-                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-                } else {
+        if (userDetailsManager.userExists(email)) {
 
-                    return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            } catch (UsernameNotFoundException exception) {
+            return new ResponseEntity<String>("Email already exists", HttpStatus.CONFLICT);
+        }
 
-                return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(role));
+
+        UserDetails user = new User(email, enc.encode(password), authorities);
+        userDetailsManager.createUser(user);
+
+        try {
+            if (userDetailsManager.loadUserByUsername(user.getUsername()).isEnabled()) {
+
+                return new ResponseEntity<String>(HttpStatus.OK);
+            } else {
+
+                return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } else {
+        } catch (UsernameNotFoundException exception) {
 
-            return new ResponseEntity<HttpStatus>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

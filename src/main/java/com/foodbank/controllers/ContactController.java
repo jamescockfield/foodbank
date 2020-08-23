@@ -14,6 +14,12 @@ import com.foodbank.utils.RequestValidator;
 @RestController
 public class ContactController {
 
+    @GetMapping("/api/contact")
+    public ResponseEntity<HttpStatus> getContact() {
+
+        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
     @PostMapping("/api/contact")
     public ResponseEntity<HttpStatus> postContact(@RequestBody HashMap<String, String> request) {
         
