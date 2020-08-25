@@ -26,18 +26,21 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired private DataSource dataSource;
 
-    @Bean
-    public JdbcUserDetailsManager userDetailsManager() {
+    private BCryptPasswordEncoder passwordEncoder;
 
-        JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
-        manager.setDataSource(dataSource);
-        return manager;
+    public SecurityConfig() {
+
+        super();
+        passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BasicUserDetailsManager userDetailsManager() {
 
-        return new BCryptPasswordEncoder();
+        BasicUserDetailsManager manager = new BasicUserDetailsManager();
+        manager.setDataSource(dataSource);
+        manager.setPasswordEncoder(passwordEncoder);
+        return manager;
     }
 
     @Override
@@ -45,7 +48,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication()
             .dataSource(dataSource)
-            .passwordEncoder(passwordEncoder());
+            .passwordEncoder(passwordEncoder);
     }
 
     @Override

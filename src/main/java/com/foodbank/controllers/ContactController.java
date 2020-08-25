@@ -2,6 +2,8 @@ package com.foodbank.controllers;
 
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.foodbank.utils.RequestValidator;
+import com.foodbank.security.BasicUserDetailsManager;
 
 @RestController
 public class ContactController {
+
+    @Autowired BasicUserDetailsManager userDetailsManager;
 
     @GetMapping("/api/contact")
     public ResponseEntity<HttpStatus> getContact() {
@@ -23,7 +27,7 @@ public class ContactController {
     @PostMapping("/api/contact")
     public ResponseEntity<HttpStatus> postContact(@RequestBody HashMap<String, String> request) {
         
-        if (RequestValidator.validateEmail(request.get("email"))) {
+        if (userDetailsManager.validateEmail(request.get("email"))) {
 
             System.out.println("Received contact form submission: " + request);
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
